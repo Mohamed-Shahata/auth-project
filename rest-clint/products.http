@@ -1,0 +1,27 @@
+### Get all products
+GET http://localhost:3000/api/products
+
+### Get Single product
+GET http://localhost:3000/api/products/2
+
+### Create new product
+POST http://localhost:3000/api/products
+Content-Type: application/json
+
+{
+  "title": "dfs",
+  "price": 500
+}
+
+### Update product
+PUT http://localhost:3000/api/products/2
+Content-Type: application/json
+
+{
+  "title": "sdd",
+  "price": 544
+
+}
+
+### Delete product
+DELETE http://localhost:3000/api/products/2
