@@ -1,72 +1,64 @@
-import { Body, Injectable, NotFoundException, Param, ParseIntPipe } from "@nestjs/common";
-import { CreateProductDto } from "./dtos/createProducts.dto";
-import { UpdateProductDto } from "./dtos/updateProducts.dto";
-
-type Product = {
-  id: number,
-  title: string,
-  price: number
-}
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { CreateProductDto } from "./dtos/create-product.dto";
+import { updateProductDto } from "./dtos/update-product.dto";
+import { Repository } from "typeorm";
+import { Product } from "./product.entity";
+import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class ProductService {
-  private products: Product[] = [
-    { id: 1, title: "produt1", price: 50 },
-    { id: 2, title: "produt2", price: 90 },
-    { id: 3, title: "produt3", price: 70 },
-    { id: 4, title: "produt4", price: 550 }
-  ];
 
-  /**
-   * Create product
-   */
-  public create(@Body() { title, price }: CreateProductDto) {
-    const newProduct: Product = {
-      id: this.products.length + 1,
-      title,
-      price
-    }
-    this.products.push(newProduct);
-    return newProduct;
+  constructor(
+    @InjectRepository(Product)
+    private readonly productsRepository: Repository<Product>
+  ) {
+
   }
 
   /**
-   * Get all products
+   *  Create new product
+   */
+  public async createProduct(dto: CreateProductDto) {
+    const newProduct = this.productsRepository.create(dto);
+    return await this.productsRepository.save(newProduct);
+  }
+
+  /**
+   *  Get all products
    */
   public getAll() {
-    return this.products;
+    return this.productsRepository.find();
   }
 
+
   /**
-   * Get product by id
+   *  Get one by id
    */
-  public getBy(@Param("id", ParseIntPipe) id: number) {
-    const product = this.products.find(p => p.id === id);
-    if (!product)
-      throw new NotFoundException("Product not found");
+  public async getOneBy(id: number) {
+    const product = await this.productsRepository.findOne({ where: { id } });
+    if (!product) throw new NotFoundException("Product not found");
     return product;
   }
 
   /**
-   * Update product
+   *  Update product by id
    */
-  public update(
-    @Param("id", ParseIntPipe) id: number,
-    @Body() body: UpdateProductDto
-  ) {
-    const product = this.products.find(p => p.id === id);
-    if (!product)
-      throw new NotFoundException("Product not found");
-    return { message: "success update" };
+  public async update(id: number, dto: updateProductDto) {
+    const product = await this.getOneBy(id);
+
+    product.title = dto.title ?? product.title;
+    product.description = dto.description ?? product.description;
+    product.price = dto.price ?? product.price;
+    return this.productsRepository.save(product);
   }
 
+
   /**
-   * Delete product
+   *  Delete product by id
    */
-  public delete(@Param("id", ParseIntPipe) id: number) {
-    const product = this.products.find(p => p.id === id);
-    if (!product)
-      throw new NotFoundException("Product not found");
-    return { message: "Product delete" };
+  public async delete(id: number) {
+    const product = await this.getOneBy(id);
+    await this.productsRepository.remove(product);
+    return { message: "product deleted successfully" };
   }
 }

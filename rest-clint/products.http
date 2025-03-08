@@ -9,19 +9,20 @@ POST http://localhost:3000/api/products
 Content-Type: application/json
 
 {
-  "title": "dfs",
-  "price": 500
+  "title": "phone",
+  "description": "about phone",
+  "price": 400
 }
 
 ### Update product
-PUT http://localhost:3000/api/products/2
+PUT http://localhost:3000/api/products/1
 Content-Type: application/json
 
 {
-  "title": "sdd",
+  "title": "update laptop",
   "price": 544
 
 }
 
 ### Delete product
-DELETE http://localhost:3000/api/products/2
+DELETE http://localhost:3000/api/products/1
