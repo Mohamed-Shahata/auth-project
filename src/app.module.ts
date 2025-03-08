@@ -4,23 +4,49 @@ import { UsersModule } from './users/users.module';
 import { ReviewsModule } from './reviews/reviews.module';
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Product } from './products/product.entity';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     ProductModule,
     UsersModule,
     ReviewsModule,
-    TypeOrmModule.forRoot({
-      type: "postgres",
-      database: "nestjs-app-db",
-      username: "postgres",
-      password: "newpassword",
-      port: 5432,
-      host: "localhost",
-      synchronize: true, // only in development
-      entities: [Product]
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return {
+          type: "postgres",
+          database: config.get<string>("DB_DATABASE"),
+          username: config.get<string>("DB_USERNAME"),
+          password: config.get<string>("DB_PASSWORD"),
+          port: config.get<number>("DB_PORT"),
+          host: "localhost",
+          synchronize: process.env.NODE_ENV !== "production",
+          entities: [Product]
+        }
+      }
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `.env.${process.env.NODE_ENV}`
     })
   ]
 })
 
 export class AppModule { }
+
+/**
+ * inject: [ConfigService],
+      useFactory: (config: ConfigService) => {
+        return {
+          type: "postgres",
+          database: config.get<string>("DB_DATABASE"),
+          username: config.get<string>("DB_USERNAME"),
+          password: config.get<string>("DB_PASSWORD"),
+          port: config.get<number>("DB_PORT"),
+          host: "localhost",
+          synchronize: true, // only in development
+          entities: [Product]
+        }
+      }
+ */
