@@ -1,19 +1,40 @@
-import { forwardRef, Inject, Injectable } from "@nestjs/common";
-import { ReviewsService } from "src/reviews/reviews.service";
+import { BadRequestException, Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { User } from "./user.entity";
+import { Repository } from "typeorm";
+import { RegisterDto } from "./dtos/register.dto";
+import * as bcryptjs from "bcryptjs";
 
 
 @Injectable()
 export class UsersService {
 
   constructor(
-    @Inject(forwardRef(() => ReviewsService)) private readonly reviewsService: ReviewsService
+    @InjectRepository(User) private readonly userRepository: Repository<User>
   ) { };
 
-  public getAll() {
-    return [
-      { id: 1, name: "mohamed", passsword: "123" },
-      { id: 2, name: "omer", passsword: "155" },
-      { id: 3, name: "ahmed", passsword: "983" },
-    ]
+
+  /**
+   * Create new user
+   * @param registerDto data for creating new user 
+   * @returns JWT (accessToken)
+   */
+  public async register(registerDto: RegisterDto) {
+    const { username, password, email } = registerDto;
+
+    const userExist = await this.userRepository.findOne({ where: { email } });
+    if (userExist) throw new BadRequestException("User already exist");
+
+    const salt = await bcryptjs.genSalt(10);
+    const hashPassword = await bcryptjs.hash(password, salt);
+
+    let newUser = this.userRepository.create({
+      username,
+      email,
+      password: hashPassword
+    })
+
+    newUser = await this.userRepository.save(newUser);
+    return { newUser }
   }
 }
