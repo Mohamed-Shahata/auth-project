@@ -3,7 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./user.entity";
 import { Repository } from "typeorm";
 import { RegisterDto } from "./dtos/register.dto";
-import * as bcryptjs from "bcryptjs";
+import * as bcrypt from "bcryptjs";
+import { LoginDto } from "./dtos/login.dto";
 
 
 @Injectable()
@@ -25,8 +26,8 @@ export class UsersService {
     const userExist = await this.userRepository.findOne({ where: { email } });
     if (userExist) throw new BadRequestException("User already exist");
 
-    const salt = await bcryptjs.genSalt(10);
-    const hashPassword = await bcryptjs.hash(password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(password, salt);
 
     let newUser = this.userRepository.create({
       username,
@@ -36,5 +37,23 @@ export class UsersService {
 
     newUser = await this.userRepository.save(newUser);
     return { newUser }
+  }
+
+
+  /**
+   * Login user
+   * @param loginDto data for log in to user account 
+   * @returns JWT (accessToken)
+   */
+  public async login(loginDto: LoginDto) {
+    const { email, password } = loginDto;
+    const user = await this.userRepository.findOne({ where: { email } });
+
+    if (!user) throw new BadRequestException("invalid email or password");
+
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch) throw new BadRequestException("invalid email or password");
+
+    return { user };
   }
 }

@@ -7,5 +7,11 @@ Content-Type: application/json
   "password": "123456"
 }
 
-### Get Single users
-GET http://localhost:3000/api/users/1
+### login
+POST  http://localhost:3000/api/users/auth/login
+Content-Type: application/json
+
+{
+  "email":"reem@gmail.com",
+  "password": "123456"
+}
