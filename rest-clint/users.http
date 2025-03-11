@@ -12,7 +12,7 @@ POST  http://localhost:3000/api/users/auth/login
 Content-Type: application/json
 
 {
-  "email":"mohamedmeslan@gmail.com",
+  "email":"reem@gmail.com",
   "password": "123456"
 }
 
@@ -22,3 +22,17 @@ Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlclR5
 
 ### get all users
 GET http://localhost:3000/api/users
+
+### update user
+PUT  http://localhost:3000/api/users
+Content-Type: application/json
+Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTY1NjQ5NywiZXhwIjoxNzQxNzQyODk3fQ.e6Csyc6x7MZbGePZIM6BQ3Z6uHXOhdlBjk5uCb7dSW8"
+
+{
+  "email":"mohamedmeslan@gmail.com",
+  "password": "123456"
+}
+
+### delete user
+DELETE http://localhost:3000/api/users/2
+Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTY1NjQ5NywiZXhwIjoxNzQxNzQyODk3fQ.e6Csyc6x7MZbGePZIM6BQ3Z6uHXOhdlBjk5uCb7dSW8"
