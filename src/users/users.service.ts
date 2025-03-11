@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./user.entity";
 import { Repository } from "typeorm";
@@ -14,7 +14,7 @@ export class UsersService {
 
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
   ) { };
 
 
@@ -63,6 +63,25 @@ export class UsersService {
     const accessToken = await this.generateJWT({ id: user.id, userType: user.userType })
 
     return { accessToken };
+  }
+
+  /**
+   * Get current user (logged in user)
+   * @param id id of the logged in user
+   * @returns the user from the database
+   */
+  public async getCurrentUser(id: number): Promise<User> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (!user) throw new NotFoundException("user not found");
+    return user;
+  }
+
+  /**
+   * Get all users from the database
+   * @returns collection of users
+   */
+  public getAll(): Promise<User[]> {
+    return this.userRepository.find();
   }
 
 

@@ -3,7 +3,7 @@ POST  http://localhost:3000/api/users/auth/register
 Content-Type: application/json
 
 {
-  "email":"Omer@gmail.com",
+  "email":"reem@gmail.com",
   "password": "123456"
 }
 
@@ -12,6 +12,13 @@ POST  http://localhost:3000/api/users/auth/login
 Content-Type: application/json
 
 {
-  "email":"reem@gmail.com",
+  "email":"mohamedmeslan@gmail.com",
   "password": "123456"
 }
+
+### get current user
+GET http://localhost:3000/api/users/current-user
+Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzQxNjM0MDMwLCJleHAiOjE3NDE3MjA0MzB9.u3z-VcjOF25uTNzlPgCn6ndp714yoF01Nngfj0xStr4"
+
+### get all users
+GET http://localhost:3000/api/users
