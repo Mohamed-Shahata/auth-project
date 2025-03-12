@@ -2,27 +2,28 @@
 GET http://localhost:3000/api/products
 
 ### Get Single product
-GET http://localhost:3000/api/products/2
+GET http://localhost:3000/api/products/4
 
 ### Create new product
 POST http://localhost:3000/api/products
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTgxMDM1MCwiZXhwIjoxNzQxODk2NzUwfQ.mhQiilobpsO64K_m6ojyAol5uuuR_eyFjnj7yN-o7BM
 
 {
-  "title": "phone",
-  "description": "about phone",
-  "price": 400
+  "title": "book",
+  "description": "about book",
+  "price": 100
 }
 
 ### Update product
-PUT http://localhost:3000/api/products/1
+PUT http://localhost:3000/api/products/3
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzQxODExNjQ4LCJleHAiOjE3NDE4OTgwNDh9.7Ee3etLCGriaWqSWXmRzpLf77fROCz2LmOlK13NhSMQ
 
 {
-  "title": "update laptop",
-  "price": 544
-
+  "title": "update product"
 }
 
 ### Delete product
-DELETE http://localhost:3000/api/products/1
+DELETE http://localhost:3000/api/products/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzQxODExNjQ4LCJleHAiOjE3NDE4OTgwNDh9.7Ee3etLCGriaWqSWXmRzpLf77fROCz2LmOlK13NhSMQ

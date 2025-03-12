@@ -3,7 +3,7 @@ POST  http://localhost:3000/api/users/auth/register
 Content-Type: application/json
 
 {
-  "email":"reem@gmail.com",
+  "email":"mostafa@gmail.com",
   "password": "123456"
 }
 
@@ -12,13 +12,13 @@ POST  http://localhost:3000/api/users/auth/login
 Content-Type: application/json
 
 {
-  "email":"reem@gmail.com",
+  "email":"Omer@gmail.com",
   "password": "123456"
 }
 
 ### get current user
 GET http://localhost:3000/api/users/current-user
-Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzQxNjM0MDMwLCJleHAiOjE3NDE3MjA0MzB9.u3z-VcjOF25uTNzlPgCn6ndp714yoF01Nngfj0xStr4"
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTgwNTczMCwiZXhwIjoxNzQxODkyMTMwfQ.91YgvvMRr899xErLWV0AVBLmqYnZNR0ufUk2_zzDEr8
 
 ### get all users
 GET http://localhost:3000/api/users
@@ -26,7 +26,7 @@ GET http://localhost:3000/api/users
 ### update user
 PUT  http://localhost:3000/api/users
 Content-Type: application/json
-Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTY1NjQ5NywiZXhwIjoxNzQxNzQyODk3fQ.e6Csyc6x7MZbGePZIM6BQ3Z6uHXOhdlBjk5uCb7dSW8"
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTY1NjQ5NywiZXhwIjoxNzQxNzQyODk3fQ.e6Csyc6x7MZbGePZIM6BQ3Z6uHXOhdlBjk5uCb7dSW8
 
 {
   "email":"mohamedmeslan@gmail.com",
@@ -35,4 +35,4 @@ Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5
 
 ### delete user
 DELETE http://localhost:3000/api/users/2
-Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTY1NjQ5NywiZXhwIjoxNzQxNzQyODk3fQ.e6Csyc6x7MZbGePZIM6BQ3Z6uHXOhdlBjk5uCb7dSW8"
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTY1NjQ5NywiZXhwIjoxNzQxNzQyODk3fQ.e6Csyc6x7MZbGePZIM6BQ3Z6uHXOhdlBjk5uCb7dSW8

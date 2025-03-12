@@ -4,27 +4,38 @@ import { updateProductDto } from "./dtos/update-product.dto";
 import { Repository } from "typeorm";
 import { Product } from "./product.entity";
 import { InjectRepository } from "@nestjs/typeorm";
+import { UsersService } from "src/users/users.service";
 
 @Injectable()
 export class ProductService {
 
   constructor(
     @InjectRepository(Product)
-    private readonly productsRepository: Repository<Product>
+    private readonly productsRepository: Repository<Product>,
+    private readonly userService: UsersService
   ) {
 
   }
 
   /**
    *  Create new product
+   *  @param dto data for creating new product
+   *  @param userId id of thr logged in user (Admin)
+   *  @returns the created product from the database
    */
-  public async createProduct(dto: CreateProductDto) {
-    const newProduct = this.productsRepository.create(dto);
+  public async createProduct(dto: CreateProductDto, userId: number) {
+    const user = await this.userService.getCurrentUser(userId);
+    const newProduct = this.productsRepository.create({
+      ...dto,
+      title: dto.title.toLowerCase(),
+      user
+    });
     return await this.productsRepository.save(newProduct);
   }
 
   /**
    *  Get all products
+   *  @returns collection of products
    */
   public getAll() {
     return this.productsRepository.find();
@@ -32,7 +43,9 @@ export class ProductService {
 
 
   /**
-   *  Get one by id
+   *  Get one product by id
+   *  @param id id of the product
+   *  @returns product from the database
    */
   public async getOneBy(id: number) {
     const product = await this.productsRepository.findOne({ where: { id } });
@@ -42,6 +55,9 @@ export class ProductService {
 
   /**
    *  Update product by id
+   *  @param id id of the product
+   *  @param dto data for updating the exsiting product
+   *  @returns the updated product
    */
   public async update(id: number, dto: updateProductDto) {
     const product = await this.getOneBy(id);
@@ -55,6 +71,8 @@ export class ProductService {
 
   /**
    *  Delete product by id
+   *  @param id id of the product
+   *  @returns a sucess message
    */
   public async delete(id: number) {
     const product = await this.getOneBy(id);
