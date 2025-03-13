@@ -1,5 +1,5 @@
 ### Get all reviews
-GET http://localhost:3000/api/reviews
+GET http://localhost:3000/api/reviews?pageNumber=1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTg2OTcxOSwiZXhwIjoxNzQxOTU2MTE5fQ.ZmhSLVw_iSRd1k8H0UQRn6s7OkkRs6YCGnNc0EhoBgA
 
 ### Get Single reviews
@@ -8,11 +8,11 @@ GET http://localhost:3000/api/reviews/2
 ### Create new review
 POST http://localhost:3000/api/reviews/11
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzQxODY3NzY4LCJleHAiOjE3NDE5NTQxNjh9.JiIksxQe3LEEonBgnOX8IfAlcHJkF966tiG6HUPff_o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzQxODc1OTM2LCJleHAiOjE3NDE5NjIzMzZ9.26m3ElqbnX7xfPpL_zr6_M2qfOUnZxfPPqpUqR1Cfwc
 
 {
-  "rating": 5,
-  "comment": "this is good product from mostafa 3"
+  "rating": 3,
+  "comment": "this is good product from omer5"
 }
 
 ### Update review

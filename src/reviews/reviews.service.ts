@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Review } from "./review.entity";
 import { Repository } from "typeorm";
@@ -45,10 +45,20 @@ export class ReviewsService {
 
   /**
    * Get all Reviews
+   * @param pageNumber number of the current page
    * @returns collection of reviews
    */
-  public getAll() {
-    return this.reviewRepository.find({ order: { createdAt: "DESC" } });
+  public getAll(pageNumber: number) {
+
+    if (pageNumber < 1)
+      throw new BadRequestException("pageNumber must be greater than 0")
+
+    return this.reviewRepository.find({
+      skip: 3 * (pageNumber - 1),
+      take: 3,
+      order: { createdAt: "DESC" }
+    }
+    );
   }
 
   /**
