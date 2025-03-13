@@ -12,7 +12,7 @@ import {
 } from "@nestjs/common";
 import { CreateProductDto } from "./dtos/create-product.dto";
 import { updateProductDto } from "./dtos/update-product.dto";
-import { ProductService } from "./products.service";
+import { ProductsService } from "./products.service";
 import { AuthRolesGuard } from "src/users/guards/auth.roles.guard";
 import { Roles } from "src/users/decorators/user-role.decorator";
 import { UserType } from "src/utils/enum";
@@ -38,7 +38,7 @@ import { CurrentUser } from "src/users/decorators/current-user.decorator";
 @Controller("/api/products")
 export class ProductsController {
 
-  constructor(private readonly productService: ProductService) { };
+  constructor(private readonly productService: ProductsService) { };
 
 
   // POST: ~/api/products

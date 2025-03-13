@@ -1,5 +1,5 @@
 ### Get all products
-GET http://localhost:3000/api/products?minPrice=100&maxPrice=900
+GET http://localhost:3000/api/products
 
 ### Get Single product
 GET http://localhost:3000/api/products/4

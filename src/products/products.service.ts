@@ -7,7 +7,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { UsersService } from "src/users/users.service";
 
 @Injectable()
-export class ProductService {
+export class ProductsService {
 
   constructor(
     @InjectRepository(Product)

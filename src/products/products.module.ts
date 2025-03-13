@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ProductsController } from "./products.controller";
-import { ProductService } from "./products.service";
+import { ProductsService } from "./products.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { Product } from "./product.entity";
 import { UsersModule } from "src/users/users.module";
@@ -8,7 +8,8 @@ import { JwtModule } from "@nestjs/jwt";
 
 @Module({
   controllers: [ProductsController],
-  providers: [ProductService],
-  imports: [TypeOrmModule.forFeature([Product]), UsersModule, JwtModule]
+  providers: [ProductsService],
+  imports: [TypeOrmModule.forFeature([Product]), UsersModule, JwtModule],
+  exports: [ProductsService]
 })
 export class ProductModule { };

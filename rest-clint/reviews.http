@@ -1,5 +1,30 @@
 ### Get all reviews
 GET http://localhost:3000/api/reviews
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTg2OTcxOSwiZXhwIjoxNzQxOTU2MTE5fQ.ZmhSLVw_iSRd1k8H0UQRn6s7OkkRs6YCGnNc0EhoBgA
 
 ### Get Single reviews
-GET http://localhost:3000/api/reviews/1
+GET http://localhost:3000/api/reviews/2
+
+### Create new review
+POST http://localhost:3000/api/reviews/11
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzQxODY3NzY4LCJleHAiOjE3NDE5NTQxNjh9.JiIksxQe3LEEonBgnOX8IfAlcHJkF966tiG6HUPff_o
+
+{
+  "rating": 5,
+  "comment": "this is good product from mostafa 3"
+}
+
+### Update review
+PUT http://localhost:3000/api/reviews/4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzQxODY3NzY4LCJleHAiOjE3NDE5NTQxNjh9.JiIksxQe3LEEonBgnOX8IfAlcHJkF966tiG6HUPff_o
+
+{
+  "rating": 4,
+  "comment": "this is good product from mostafa 3"
+}
+
+### Delete review
+DELETE http://localhost:3000/api/reviews/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTg3MTUxNywiZXhwIjoxNzQxOTU3OTE3fQ.KazQCx1E5Y7yp6Vm3Zz9kyNEjXpuzwjmoiK52HGEBrA
