@@ -1,5 +1,5 @@
 ### Get all products
-GET http://localhost:3000/api/products
+GET http://localhost:3000/api/products?minPrice=100&maxPrice=900
 
 ### Get Single product
 GET http://localhost:3000/api/products/4
@@ -11,8 +11,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwidXNlclR5c
 
 {
   "title": "book",
-  "description": "about book",
-  "price": 100
+  "description": "about mouse2",
+  "price": 50
 }
 
 ### Update product
