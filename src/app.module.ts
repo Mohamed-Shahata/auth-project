@@ -8,12 +8,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Review } from './reviews/review.entity';
 import { User } from './users/user.entity';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { UploadsModule } from './uploads/uploads.module';
 
 @Module({
   imports: [
     ProductModule,
     UsersModule,
     ReviewsModule,
+    UploadsModule,
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {

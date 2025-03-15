@@ -8,11 +8,11 @@ GET http://localhost:3000/api/reviews/2
 ### Create new review
 POST http://localhost:3000/api/reviews/11
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzQxODc1OTM2LCJleHAiOjE3NDE5NjIzMzZ9.26m3ElqbnX7xfPpL_zr6_M2qfOUnZxfPPqpUqR1Cfwc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTg3Njg2NiwiZXhwIjoxNzQxOTYzMjY2fQ.PL8bEIcsEZ_l5zcqsmAWPcfqSTSR4KdlGaaaAPWt1D0
 
 {
   "rating": 3,
-  "comment": "this is good product from omer5"
+  "comment": "this is good product from reem1"
 }
 
 ### Update review

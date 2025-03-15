@@ -1,4 +1,4 @@
-import { ForbiddenException, Inject, Injectable, NotFoundException } from "@nestjs/common";
+import { BadRequestException, ForbiddenException, Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "./user.entity";
 import { Repository } from "typeorm";
@@ -8,6 +8,8 @@ import { UserType } from "src/utils/enum";
 import { AuthProviders } from "./providers/auth.provider";
 import { RegisterDto } from "./dtos/register.dto";
 import { LoginDto } from "./dtos/login.dto";
+import { join } from "node:path";
+import { unlinkSync } from "node:fs";
 
 
 @Injectable()
@@ -91,5 +93,44 @@ export class UsersService {
       return { message: "User has been deleted" }
     }
     throw new ForbiddenException("access denied, you are not allowed")
+  };
+
+
+  /**
+   *  Set profle image
+   * @param userId id of the logged in user
+   * @param newProfileImage profile image
+   * @returns the user from the database
+   */
+  public async setProfileImage(userId: number, newProfileImage: string) {
+    const user = await this.getCurrentUser(userId);
+
+    if (!user.profileImage) {
+      user.profileImage = newProfileImage;
+    } else {
+      await this.removeProfileImage(userId);
+      user.profileImage = newProfileImage;
+    }
+
+    return this.userRepository.save(user);
+  }
+
+  /**
+   * Remove profile image
+   * @param userId id of the logged in user
+   * @returns the user from the database
+   */
+  public async removeProfileImage(userId: number) {
+    const user = await this.getCurrentUser(userId);
+    if (!user.profileImage)
+      throw new BadRequestException("there is no profile image");
+
+    const imagePath = join(process.cwd(), `./images/users/${user.profileImage}`);
+
+    // remove image
+    unlinkSync(imagePath);
+
+    user.profileImage = null;
+    return this.userRepository.save(user);
   }
 }
