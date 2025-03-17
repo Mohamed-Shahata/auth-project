@@ -6,6 +6,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  NotFoundException,
   Param,
   ParseIntPipe,
   Post,
@@ -27,6 +28,8 @@ import { AuthRolesGuard } from "./guards/auth.roles.guard";
 import { UpdateUserDto } from "./dtos/update-user.dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Express, Response } from "express";
+import { join } from "path";
+import { existsSync } from "fs";
 
 
 @Controller("/api/users")
@@ -100,6 +103,11 @@ export class UserController {
   @Get("/images/:image")
   @UseGuards(AuthGuard)
   public showProfileImage(@Param("image") image: string, @Res() res: Response) {
-    return res.sendFile(image, { root: "images/users" })
+
+    const imagePath = join("images/users", image);
+    if (!existsSync(imagePath)) {
+      throw new NotFoundException("Image not found");
+    }
+    return res.sendFile(image, { root: "images/users" });
   }
 }
