@@ -7,6 +7,7 @@ import { RegisterDto } from "../dtos/register.dto";
 import { AccessTokenType, JWTPayloadType } from "src/utils/types";
 import { LoginDto } from "../dtos/login.dto";
 import * as bcrypt from "bcryptjs";
+import { MailService } from "src/mail/mail.service";
 
 
 @Injectable()
@@ -15,6 +16,7 @@ export class AuthProviders {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
+    private readonly mailService: MailService
   ) { };
 
   /**
@@ -59,6 +61,9 @@ export class AuthProviders {
     if (!isPasswordMatch) throw new BadRequestException("invalid email or password");
 
     const accessToken = await this.generateJWT({ id: user.id, userType: user.userType })
+
+    // sending message to user email
+    await this.mailService.sendLogEmail(user.email);
 
     return { accessToken };
   }
