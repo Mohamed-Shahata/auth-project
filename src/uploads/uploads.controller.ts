@@ -1,39 +1,31 @@
-import { BadRequestException, Controller, Get, Param, Post, Res, UploadedFile, UseInterceptors } from "@nestjs/common";
-import { FileInterceptor } from "@nestjs/platform-express";
-import { diskStorage } from "multer";
+import { BadRequestException, Controller, Get, Param, Post, Res, UploadedFile, UploadedFiles, UseInterceptors } from "@nestjs/common";
+import { FileInterceptor, FilesInterceptor } from "@nestjs/platform-express";
 import { Express, Response } from "express";
 
 
 @Controller("/api/uploads")
 export class UploadsController {
 
-
   // POST: ~/api/uploads
   @Post()
-  @UseInterceptors(FileInterceptor("file", {
-    storage: diskStorage({
-      destination: "./images",
-      filename: (req, file, cb) => {
-        const prefix = `${Date.now()}-${Math.round(Math.random() * 1000000)}`;
-        const filename = `${prefix}-${file.originalname}`;
-        cb(null, filename);
-      }
-    }),
-    fileFilter: (req, file, cb) => {
-      if (file.mimetype.startsWith("image")) {
-        cb(null, true);
-      } else {
-        cb(new BadRequestException("Unsupported file format"), false);
-      }
-    },
-    limits: { fileSize: 1024 * 1024 * 2 } // 2 megabyte
-  }))
+  @UseInterceptors(FileInterceptor("file"))
   public uploadFile(@UploadedFile() file: Express.Multer.File) {
     if (!file) throw new BadRequestException("no file provided")
 
     console.log("uploaded success", { file });
     return { message: "file uploaded successfuly" };
   }
+
+  // POST: ~/api/uploads/multiple-files
+  @Post("/multiple-files")
+  @UseInterceptors(FilesInterceptor("files"))
+  public uploadMultipleFiles(@UploadedFiles() files: Array<Express.Multer.File>) {
+    if (!files || files.length === 0) throw new BadRequestException("no file provided")
+
+    console.log("uploaded success", { files });
+    return { message: "file uploaded successfuly" };
+  }
+
 
   @Get("/:image")
   public showUploadedImage(@Param("image") image: string, @Res() res: Response) {
