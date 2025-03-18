@@ -7,12 +7,12 @@ GET http://localhost:5000/api/products/4
 ### Create new product
 POST http://localhost:5000/api/products
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTgxMDM1MCwiZXhwIjoxNzQxODk2NzUwfQ.mhQiilobpsO64K_m6ojyAol5uuuR_eyFjnj7yN-o7BM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUsInVzZXJUeXBlIjoiYWRtaW4iLCJpYXQiOjE3NDIzMDIwNTksImV4cCI6MTc0MjM4ODQ1OX0.qRV8RkgZiAXqvDpTAW5_Jv-QuTghekk8WLDhfIdiskg
 
 {
-  "title": "book",
-  "description": "about mouse2",
-  "price": 50
+  "title": "laptop",
+  "description": "about laptop",
+  "price": 5000
 }
 
 ### Update product
