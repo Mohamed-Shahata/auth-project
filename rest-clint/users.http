@@ -1,5 +1,5 @@
 ### Register
-POST  http://localhost:3000/api/users/auth/register
+POST  http://localhost:5000/api/users/auth/register
 Content-Type: application/json
 
 {
@@ -8,7 +8,7 @@ Content-Type: application/json
 }
 
 ### login
-POST  http://localhost:3000/api/users/auth/login
+POST  http://localhost:5000/api/users/auth/login
 Content-Type: application/json
 
 {
@@ -17,15 +17,15 @@ Content-Type: application/json
 }
 
 ### get current user
-GET http://localhost:3000/api/users/current-user
+GET http://localhost:5000/api/users/current-user
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTgwNTczMCwiZXhwIjoxNzQxODkyMTMwfQ.91YgvvMRr899xErLWV0AVBLmqYnZNR0ufUk2_zzDEr8
 
 ### get all users
-GET http://localhost:3000/api/users
+GET http://localhost:5000/api/users
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTg3Njg2NiwiZXhwIjoxNzQxOTYzMjY2fQ.PL8bEIcsEZ_l5zcqsmAWPcfqSTSR4KdlGaaaAPWt1D0
 
 ### update user
-PUT  http://localhost:3000/api/users
+PUT  http://localhost:5000/api/users
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5cGUiOiJhZG1pbiIsImlhdCI6MTc0MTY1NjQ5NywiZXhwIjoxNzQxNzQyODk3fQ.e6Csyc6x7MZbGePZIM6BQ3Z6uHXOhdlBjk5uCb7dSW8
 
@@ -35,5 +35,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlclR5c
 }
 
 ### delete user
-DELETE http://localhost:3000/api/users/7
+DELETE http://localhost:5000/api/users/7
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywidXNlclR5cGUiOiJ1c2VyIiwiaWF0IjoxNzQxODc3MzE1LCJleHAiOjE3NDE5NjM3MTV9.HbmkebULbK2MqiWLcE-V2znu1MAk0KvyaapYJZFyYhw

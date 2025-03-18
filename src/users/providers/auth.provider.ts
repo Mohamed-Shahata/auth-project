@@ -10,6 +10,7 @@ import * as bcrypt from "bcryptjs";
 import { MailService } from "src/mail/mail.service";
 import { randomBytes } from "node:crypto";
 import { ConfigService } from "@nestjs/config";
+import { ResetPasswordDto } from "../dtos/reset-password.dto";
 
 
 @Injectable()
@@ -66,7 +67,7 @@ export class AuthProviders {
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) throw new BadRequestException("invalid email or password");
 
-    if (!user.verificationToken || user.isAccountVerify === false) {
+    if (user.verificationToken || user.isAccountVerify === false) {
       let verificationToken = user.verificationToken;
 
       if (!verificationToken) {
@@ -84,14 +85,67 @@ export class AuthProviders {
     const accessToken = await this.generateJWT({ id: user.id, userType: user.userType });
 
     return { accessToken };
+  };
+
+  /*
+   * Sending reset password link to the client
+  */
+  public async sendResetPasswordLink(email: string) {
+    const user = await this.userRepository.findOne({ where: { email } });
+    if (!user) throw new BadRequestException("user with given email does not exist");
+
+    user.resetPasswordToken = randomBytes(32).toString("hex");
+
+    const result = await this.userRepository.save(user);
+    const resetPasswordLink = `${this.config.get<string>("CLINT_DOMAIN")}/reset-password/${result.id}/${result.resetPasswordToken}`;
+
+    await this.mailService.sendResetPasswordTemplate(email, resetPasswordLink);
+    return { message: "Password reset link sent to your email, please check your inbox" };
+  };
+
+
+  /*
+   * Get reset password link
+  */
+  public async getResetPasswordLink(userId: number, resetPasswordToken: string) {
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    if (!user) throw new BadRequestException("user with given email does not exist");
+
+    if (user.resetPasswordToken === null || user.resetPasswordToken !== resetPasswordToken) {
+      throw new BadRequestException("invalid link");
+    }
+
+    return { message: "invalid link" };
   }
+
+  /*
+   * Reset the password
+  */
+  public async resetPassword(dto: ResetPasswordDto) {
+    const { newPassword, userId, resetPasswordToken } = dto;
+
+    const user = await this.userRepository.findOne({ where: { id: userId } });
+    if (!user) throw new BadRequestException("user with given email does not exist");
+
+    if (user.resetPasswordToken === null || user.resetPasswordToken !== resetPasswordToken)
+      throw new BadRequestException("invalid link");
+
+    const hashPassword = await this.hashPassword(newPassword);
+    user.password = hashPassword;
+    user.resetPasswordToken = null;
+
+    await this.userRepository.save(user);
+
+    return { message: "password reset successfully, please log in" };
+  }
+
 
   /**
  * Hassing password
  * @param password plain text password
  * @returns hashed password
  */
-  async hashPassword(password: string): Promise<string> {
+  async hashPassword(password: string) {
     const salt = await bcrypt.genSalt(10);
     return bcrypt.hash(password, salt);
   }

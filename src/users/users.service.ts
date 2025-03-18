@@ -10,6 +10,7 @@ import { RegisterDto } from "./dtos/register.dto";
 import { LoginDto } from "./dtos/login.dto";
 import { join } from "node:path";
 import { unlinkSync } from "node:fs";
+import { ResetPasswordDto } from "./dtos/reset-password.dto";
 
 
 @Injectable()
@@ -155,5 +156,34 @@ export class UsersService {
 
     await this.userRepository.save(user);
     return { message: "Your email has been verified, please log in to your account" };
+  };
+
+  /**
+   * Sending reset password teplate
+   * @param email email of the user
+   * @returns a success message
+   */
+  public sendResetPassword(email: string) {
+    return this.authProviders.sendResetPasswordLink(email);
   }
-}
+
+  /**
+   * Get reset password link
+   * @param userId user id from the link
+   * @param resetPasswordToken reset password token from the link
+   * @returns a success message
+   */
+  public getResetPassword(userId: number, resetPasswordToken: string) {
+    return this.authProviders.getResetPasswordLink(userId, resetPasswordToken);
+  };
+
+  /**
+   * Reset the password
+   * @param dto data for reset the passsword
+   * @returns a success message
+   */
+  public resetPassword(dto: ResetPasswordDto) {
+    return this.authProviders.resetPassword(dto);
+  }
+
+};

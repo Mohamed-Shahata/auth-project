@@ -30,6 +30,8 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { Express, Response } from "express";
 import { join } from "path";
 import { existsSync } from "fs";
+import { ForgotPasswordDto } from "./dtos/forgot-password.dto";
+import { ResetPasswordDto } from "./dtos/reset-password.dto";
 
 
 @Controller("/api/users")
@@ -118,5 +120,27 @@ export class UserController {
     @Param("verificationToken") verificationToken: string
   ) {
     return this.userService.verifyEmail(id, verificationToken);
+  };
+
+  //POST: ~/api/users/forgot-password
+  @Post("/forgot-password")
+  @HttpCode(HttpStatus.OK)
+  public forgotPassword(@Body() body: ForgotPasswordDto) {
+    return this.userService.sendResetPassword(body.email);
   }
-}
+
+  //GET: ~/api/users/reset-password/:id/:resetPasswordToken
+  @Get("/reset-password/:id/:resetPasswordToken")
+  public getResetPassword(
+    @Param("id", ParseIntPipe) id: number,
+    @Param("resetPasswordToken") resetPasswordToken: string
+  ) {
+    return this.userService.getResetPassword(id, resetPasswordToken);
+  };
+
+  //POST: ~/api/users/reset-password
+  @Post("/reset-password")
+  public resetPassword(@Body() body: ResetPasswordDto) {
+    return this.userService.resetPassword(body);
+  };
+};
