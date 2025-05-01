@@ -1,13 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import * as crypto from 'crypto';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-
-if (!(global as any).crypto) {
-  (global as any).crypto = require("crypto");
-}
-
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,16 +8,6 @@ async function bootstrap() {
     whitelist: true,
     forbidNonWhitelisted: true
   }));
-
-
-  app.enableCors({
-    origin: "http://localhost:3000"
-  });
-
-  const swagger = new DocumentBuilder().setVersion("1.0").build();
-  const documentation = SwaggerModule.createDocument(app, swagger);
-  // http://localhost:5000/swagger
-  SwaggerModule.setup("swagger", app, documentation);
 
   await app.listen(5000);
 }

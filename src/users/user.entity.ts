@@ -1,9 +1,7 @@
 import { Exclude } from "class-transformer";
-import { Product } from "src/products/product.entity";
-import { Review } from "src/reviews/review.entity";
 import { CURRENT_TIMESTAMP } from "src/utils/constants";
 import { UserType } from "src/utils/enum";
-import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { Entity, Column, CreateDateColumn, UpdateDateColumn, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity({ name: "users" })
@@ -30,21 +28,9 @@ export class User {
   @Column({ nullable: true, type: "varchar" })
   verificationToken: string | null;
 
-  @Column({ nullable: true, type: "varchar" })
-  resetPasswordToken: string | null;
-
   @CreateDateColumn({ type: "timestamp", default: () => CURRENT_TIMESTAMP })
   createdAt: Date;
 
   @UpdateDateColumn({ type: "timestamp", default: () => CURRENT_TIMESTAMP, onUpdate: CURRENT_TIMESTAMP })
   updatedAt: Date;
-
-  @Column({ nullable: true, default: null, type: "varchar" })
-  profileImage: string | null;
-
-  @OneToMany(() => Product, (product) => product.user)
-  products: Product[];
-
-  @OneToMany(() => Review, (review) => review.user)
-  reviews: Review[];
 };
